@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../shared/lib/prisma"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// User 모델 (Supabase auth.users와 연동)
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // 관계
+  givenGifts    Gift[] @relation("GiverGifts")
+  receivedGifts Gift[] @relation("ReceivedGifts")
+
+  @@map("users")
+}
+
+// Gift 모델
+model Gift {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  image       String?
+  price       Decimal? @db.Decimal(10, 2)
+  link        String?
+  isPublic    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // 관계
+  giverId    String
+  receiverId String?
+  giver      User    @relation("GiverGifts", fields: [giverId], references: [id])
+  receiver   User?   @relation("ReceivedGifts", fields: [receiverId], references: [id])
+
+  @@map("gifts")
+}

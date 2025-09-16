@@ -1,3 +1,42 @@
 {
-  "cSpell.words": ["supabase", "turbopack"]
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.suggest.autoImports": true,
+  "typescript.preferences.includePackageJsonAutoImports": "auto",
+  "typescript.suggest.includeAutomaticOptionalChainCompletions": true,
+  "typescript.suggest.includeCompletionsForImportStatements": true,
+  "typescript.suggest.includeCompletionsWithSnippetText": true,
+  "typescript.suggest.includeCompletionsWithClassMemberSnippets": true,
+  "typescript.suggest.includeCompletionsWithObjectLiteralMethodSnippets": true,
+  "typescript.suggest.includeCompletionsWithFunctionParameterSnippets": true,
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact",
+    "typescript": "typescriptreact"
+  },
+  "cSpell.words": ["cuid"],
+  "path-intellisense.mappings": {
+    "@": "${workspaceRoot}",
+    "@/components": "${workspaceRoot}/components",
+    "@/shared": "${workspaceRoot}/shared",
+    "@/shared/ui": "${workspaceRoot}/shared/ui",
+    "@/shared/lib": "${workspaceRoot}/shared/lib",
+    "@/app": "${workspaceRoot}/app"
+  },
+  "path-intellisense.autoSlashAfterDirectory": true,
+  "path-intellisense.extensionOnImport": true,
+  "path-intellisense.showHiddenFiles": false,
+  "path-intellisense.absolutePathToWorkspace": true
 }

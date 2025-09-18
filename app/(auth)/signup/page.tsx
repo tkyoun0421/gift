@@ -1,5 +1,5 @@
 import SignupForm from "@/features/auth/ui/SignupForm";
 
-export default async function Page() {
+export default async function SignUpPage() {
   return <SignupForm />;
 }

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient as createSupabaseAdmin } from "@supabase/supabase-js";
+import axios from "axios";
 
 function jsonBadRequest(message: string) {
   return NextResponse.json(
@@ -11,12 +11,30 @@ function jsonBadRequest(message: string) {
 export async function POST(req: NextRequest) {
   try {
     const { email } = (await req.json()) as { email?: string };
-    if (!email || typeof email !== "string") {
+
+    console.log("email: ", email);
+
+    if (!email || typeof email !== "string")
       return jsonBadRequest("email이 필요합니다.");
+
+    const trimmed = email.trim();
+    const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!EMAIL_REGEX.test(trimmed)) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "INVALID_EMAIL",
+          message: "올바른 이메일 형식이 아닙니다.",
+        },
+        { status: 400 }
+      );
     }
 
-    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    const url =
+      process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const serviceRoleKey =
+      process.env.SUPABASE_SERVICE_ROLE_KEY ||
+      process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY;
 
     if (!url || !serviceRoleKey) {
       return NextResponse.json(
@@ -29,32 +47,45 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const admin = createSupabaseAdmin(url, serviceRoleKey);
-    const lower = email.toLowerCase();
-    const { data, error } = await (admin.auth.admin as any).listUsers({
-      page: 1,
-      perPage: 1,
-      filter: `email.eq.${lower}`,
+    const lower = trimmed.toLowerCase();
+    const headers = {
+      apikey: serviceRoleKey,
+      Authorization: `Bearer ${serviceRoleKey}`,
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    } as const;
+
+    // 1차: email=eq 파라미터 사용
+    // 앱 테이블에서 직접 중복확인 (권장)
+    const qs = new URLSearchParams({
+      select: "id",
+      email: `eq.${lower}`,
+      limit: "1",
     });
-    if (error) {
+    const resp = await axios.get(`${url}/rest/v1/users?${qs.toString()}`, {
+      headers,
+      timeout: 10000,
+      validateStatus: () => true,
+    });
+
+    if (resp.status < 200 || resp.status >= 300) {
+      const errText =
+        typeof resp.data === "string" ? resp.data : JSON.stringify(resp.data);
       return NextResponse.json(
         {
           success: false,
           error: "SUPABASE_ERROR",
-          message: String(error?.message ?? error),
+          message: errText || "REST API 오류",
         },
-        { status: 500 }
+        { status: resp.status }
       );
     }
-    const exists = Array.isArray(data?.users) && data.users.length > 0;
-    const confirmed = exists
-      ? Boolean(data.users[0]?.email_confirmed_at)
-      : false;
-    return NextResponse.json(
-      { success: true, exists, confirmed },
-      { status: 200 }
-    );
+
+    const users = Array.isArray(resp.data) ? resp.data : [];
+    const exists = users.length > 0;
+    return NextResponse.json({ success: true, exists }, { status: 200 });
   } catch (err) {
+    console.error(err);
     return NextResponse.json(
       { success: false, error: "INTERNAL_ERROR", message: "서버 오류" },
       { status: 500 }

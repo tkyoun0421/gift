@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
     }
 
     const supabase = await createClient();
-    const { error } = await supabase.from("applicant").insert(parsed.data);
+    const { error } = await supabase.from("applicants").insert(parsed.data);
 
     if (error) {
       console.error("account_open_leads insert error:", error);

@@ -42,8 +42,8 @@ export default function SignupForm() {
                 placeholder="admin@example.com"
                 value={form.watch("email")}
                 readOnly
-                className="flex-1 h-10"
-                onFocus={openEmailDialog}
+                className="flex-1 h-10 text-base"
+                onClick={openEmailDialog}
               />
               <Button
                 type="button"

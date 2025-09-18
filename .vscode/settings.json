@@ -26,7 +26,7 @@
     "javascript": "javascriptreact",
     "typescript": "typescriptreact"
   },
-  "cSpell.words": ["cuid", "gjgciairviherlylizsx"],
+  "cSpell.words": ["apikey", "cuid", "gjgciairviherlylizsx"],
   "path-intellisense.mappings": {
     "@": "${workspaceRoot}",
     "@/components": "${workspaceRoot}/components",

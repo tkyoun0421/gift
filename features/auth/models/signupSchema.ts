@@ -29,3 +29,11 @@ export const SignUpSchema = z
   });
 
 export type SignUpFormValues = z.infer<typeof SignUpSchema>;
+
+export const SignUpInsertSchema = SignUpSchema.pick({
+  email: true,
+  name: true,
+  password: true,
+  inviteCode: true,
+});
+export type SignUpInsertType = z.infer<typeof SignUpInsertSchema>;

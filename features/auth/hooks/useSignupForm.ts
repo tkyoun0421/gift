@@ -4,6 +4,7 @@ import * as React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 import {
   SignUpFormValues,
   SignUpSchema,
@@ -11,6 +12,7 @@ import {
 import { signup as signupService } from "@/features/auth/services/authService";
 
 export function useSignupForm() {
+  const router = useRouter();
   const [isEmailDialogOpen, setIsEmailDialogOpen] = React.useState(false);
 
   const form = useForm<SignUpFormValues>({
@@ -34,6 +36,7 @@ export function useSignupForm() {
         inviteCode: values.inviteCode,
       });
       toast.success(res.message);
+      router.push("/login");
     } catch (err: any) {
       const code = err?.response?.data?.error as string | undefined;
       const msg = err?.response?.data?.message ?? "회원가입 실패";
@@ -43,6 +46,8 @@ export function useSignupForm() {
           const el = document.getElementById("invite-code-input");
           if (el) (el as HTMLInputElement).focus();
         });
+        toast.error(msg);
+        router.push("/login");
         return;
       } else if (code === "EMAIL_TAKEN") {
         form.setError("email", { type: "server", message: msg });
@@ -50,6 +55,7 @@ export function useSignupForm() {
           const el = document.getElementById("email-input");
           if (el) (el as HTMLInputElement).focus();
         });
+        toast.error(msg);
         return;
       }
       toast.error(msg);

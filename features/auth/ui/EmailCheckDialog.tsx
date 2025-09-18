@@ -28,12 +28,22 @@ export default function EmailCheckDialog({
   const [email, setEmail] = React.useState(initialEmail ?? "");
   const [status, setStatus] = React.useState<EmailDialogStatus>("idle");
   const [message, setMessage] = React.useState<string>("");
+  const mouseDownOnBackdropRef = React.useRef(false);
+
+  const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const isValidEmail = EMAIL_REGEX.test(email.trim());
 
   const runCheck = async () => {
+    const trimmed = email.trim();
+    if (!trimmed || !EMAIL_REGEX.test(trimmed)) {
+      setStatus("error");
+      setMessage("올바른 이메일 형식이 아닙니다.");
+      return;
+    }
     setStatus("checking");
     setMessage("");
     try {
-      const res = await onCheck(email);
+      const res = await onCheck(trimmed);
       if (res.available) {
         setStatus("available");
       } else {
@@ -50,6 +60,7 @@ export default function EmailCheckDialog({
   const confirm = () => onConfirm(email.trim());
 
   const confirmDisabled = status !== "available";
+  const checkDisabled = status === "checking" || !isValidEmail;
 
   if (!open) return null;
 
@@ -58,8 +69,14 @@ export default function EmailCheckDialog({
       role="dialog"
       aria-modal="true"
       className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 px-4"
+      onMouseDown={e => {
+        mouseDownOnBackdropRef.current = e.target === e.currentTarget;
+      }}
       onClick={e => {
-        if (e.target === e.currentTarget) close();
+        if (mouseDownOnBackdropRef.current && e.target === e.currentTarget) {
+          close();
+        }
+        mouseDownOnBackdropRef.current = false;
       }}
     >
       <div className="w-full max-w-md rounded-xl bg-background shadow-xl">
@@ -77,6 +94,7 @@ export default function EmailCheckDialog({
                 autoFocus
                 placeholder="example@email.com"
                 value={email}
+                className="text-lg"
                 onChange={e => {
                   setEmail(e.target.value);
                   setStatus("idle");
@@ -89,13 +107,18 @@ export default function EmailCheckDialog({
               <Button
                 type="button"
                 variant="outline"
-                size="sm"
+                size="default"
                 onClick={runCheck}
-                disabled={status === "checking"}
+                disabled={checkDisabled}
               >
                 {status === "checking" ? "확인 중..." : "중복확인"}
               </Button>
             </div>
+            {email && !isValidEmail && status === "idle" && (
+              <p className="text-sm text-destructive">
+                올바른 이메일 형식이 아닙니다.
+              </p>
+            )}
             {message && (
               <p
                 className={

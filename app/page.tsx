@@ -1,72 +1,146 @@
+import Hero from "@/widgets/Hero";
+import Image from "next/image";
+import ApplicantForm from "@/features/applicant/ui/ApplicantForm";
+import BannerApplicantForm from "@/features/applicant/ui/BannerApplicantForm";
 import Link from "next/link";
-import { Button } from "@/shared/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/shared/ui/card";
+import StickySideLinks from "@/widgets/StickySideLinks";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-      <div className="w-full max-w-2xl space-y-6">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            해외선물 서비스
-          </h1>
-          <p className="text-lg text-gray-600">
-            안전하고 편리한 해외선물 서비스를 경험해보세요
-          </p>
-        </div>
+    <main className="min-h-screen flex flex-col items-center justify-center pb-0 md:pb-60">
+      <Hero
+        src="https://gjgciairviherlylizsx.supabase.co/storage/v1/object/public/images/1.webp"
+        alt="메인 히어로"
+        width={1000}
+        height={600}
+      />
+      <Hero
+        src="https://gjgciairviherlylizsx.supabase.co/storage/v1/object/public/images/lee%20(1).webp"
+        alt="파트너쉽"
+        width={1000}
+        height={600}
+      />
+      <Hero
+        src="https://gjgciairviherlylizsx.supabase.co/storage/v1/object/public/images/paris.webp"
+        alt="신규 이벤트 지원"
+        width={1000}
+        height={600}
+      />
+      <Hero
+        src="https://gjgciairviherlylizsx.supabase.co/storage/v1/object/public/images/5.webp"
+        alt="KBS N"
+        width={1000}
+        height={600}
+      />
+      <Hero
+        src="https://gjgciairviherlylizsx.supabase.co/storage/v1/object/public/images/dubai.webp"
+        alt="두바이 엑스포"
+        width={1000}
+        height={600}
+      />
 
-        <div className="grid md:grid-cols-2 gap-6">
-          {/* 신청자용 카드 */}
-          <Card className="hover:shadow-lg transition-shadow">
-            <CardHeader>
-              <CardTitle className="text-xl">서비스 신청</CardTitle>
-              <CardDescription>
-                해외선물 서비스를 신청하고 정보를 등록하세요
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Link href="/apply">
-                <Button className="w-full">신청하기</Button>
-              </Link>
-            </CardContent>
-          </Card>
-
-          {/* 관리자용 카드 */}
-          <Card className="hover:shadow-lg transition-shadow">
-            <CardHeader>
-              <CardTitle className="text-xl">관리자 로그인</CardTitle>
-              <CardDescription>
-                관리자 계정으로 로그인하여 서비스를 관리하세요
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Link href="/auth/login">
-                <Button variant="outline" className="w-full">
-                  로그인
-                </Button>
-              </Link>
-            </CardContent>
-          </Card>
-        </div>
-
-        <div className="text-center text-sm text-gray-500">
-          <p>
-            관리자 계정이 없으신가요?{" "}
-            <Link
-              href="/auth/register"
-              className="text-blue-600 hover:underline"
-            >
-              회원가입하기
-            </Link>
-          </p>
+      <div className="w-full max-w-6xl mx-auto py-12">
+        <div className="flex flex-col md:flex-row gap-6 items-center mt-5">
+          <div className="flex">
+            <Image
+              src="https://gjgciairviherlylizsx.supabase.co/storage/v1/object/public/images/video.webp"
+              alt="영상 소개"
+              width={400}
+              height={200}
+              className="h-auto"
+            />
+          </div>
+          <div className="flex-1">
+            <div className="relative w-200 aspect-video">
+              <iframe
+                className="absolute inset-0 w-full h-full shadow-lg"
+                src="https://www.youtube.com/embed/8aOkcyVhqbA?rel=0&modestbranding=1"
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              ></iframe>
+            </div>
+          </div>
         </div>
       </div>
+
+      <div className="w-full">
+        <div className="max-w-6xl mx-auto px-6 bg-white  py-16">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              계좌개설 이벤트
+            </h2>
+            <p className="text-lg md:text-xl text-gray-700">
+              신청 및 가입상담문의
+            </p>
+          </div>
+
+          <div className="bg-gray-800 rounded-lg p-8 shadow-2xl">
+            <ApplicantForm />
+          </div>
+        </div>
+      </div>
+
+      <div
+        className="shadow-2xl z-50 relative w-screen py-5 hidden md:block"
+        style={{
+          position: "fixed",
+          bottom: "0",
+          left: "0",
+          right: "0",
+          height: "240px",
+          backgroundColor: "#263948",
+        }}
+      >
+        <div className="max-w-6xl mx-auto flex items-center gap-3 md:gap-6 px-3 md:px-6 h-full">
+          <div className="flex-shrink-0 h-full hidden md:block">
+            <Image
+              src="https://gjgciairviherlylizsx.supabase.co/storage/v1/object/public/images/support.webp"
+              alt="이벤트 배너"
+              width={300}
+              height={180}
+              className="w-full h-full object-cover rounded-lg"
+            />
+          </div>
+
+          <div className="w-full md:w-3/5 flex-1">
+            <BannerApplicantForm />
+          </div>
+        </div>
+      </div>
+
+      <StickySideLinks
+        items={[
+          {
+            href: "https://open.kakao.com/o/saNIhwSh",
+            image: {
+              src: "https://gjgciairviherlylizsx.supabase.co/storage/v1/object/public/images/metatrader.webp",
+              alt: "메타트레이더",
+            },
+          },
+          {
+            href: "https://open.kakao.com/o/saNIhwSh",
+            image: {
+              src: "https://gjgciairviherlylizsx.supabase.co/storage/v1/object/public/images/kakao.webp",
+              alt: "카카오톡",
+            },
+          },
+          {
+            href: "https://open.kakao.com/o/saNIhwSh",
+            image: {
+              src: "https://gjgciairviherlylizsx.supabase.co/storage/v1/object/public/images/question.webp",
+              alt: "문의",
+            },
+          },
+        ]}
+        mobileItem={{
+          href: "https://open.kakao.com/o/saNIhwSh",
+          image: {
+            src: "https://gjgciairviherlylizsx.supabase.co/storage/v1/object/public/images/kakaotalk_sharing_btn_medium.webp",
+            alt: "카카오톡 상담",
+          },
+        }}
+      />
     </main>
   );
 }

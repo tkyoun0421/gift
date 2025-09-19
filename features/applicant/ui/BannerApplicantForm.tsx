@@ -132,7 +132,7 @@ export default function BannerApplicantForm({
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="bg-blue-600 text-white hover:bg-blue-700 font-semibold py-4 px-6 md:py-6 md:px-8 lg:py-8 lg:px-12 rounded-lg shadow-lg transition-all duration-200 hover:shadow-xl flex-shrink-0 text-sm md:text-base lg:text-lg h-full"
+          className="bg-blue-600 text-white hover:bg-blue-700 font-semibold py-3 px-4 md:py-4 md:px-6 lg:py-6 lg:px-8 xl:py-8 xl:px-12 rounded-lg shadow-lg transition-all duration-200 hover:shadow-xl flex-shrink-0 text-sm md:text-sm lg:text-base xl:text-lg h-full"
         >
           {isSubmitting ? (
             <LoadingSpinner label="신청 중..." />

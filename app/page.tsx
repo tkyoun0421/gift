@@ -2,12 +2,11 @@ import Hero from "@/widgets/Hero";
 import Image from "next/image";
 import ApplicantForm from "@/features/applicant/ui/ApplicantForm";
 import BannerApplicantForm from "@/features/applicant/ui/BannerApplicantForm";
-import Link from "next/link";
 import StickySideLinks from "@/widgets/StickySideLinks";
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center pb-0 md:pb-60">
+    <main className="min-h-screen flex flex-col items-center justify-center pb-0 md:pb-48">
       <Hero
         src="https://gjgciairviherlylizsx.supabase.co/storage/v1/object/public/images/1.webp"
         alt="메인 히어로"
@@ -82,13 +81,13 @@ export default function Home() {
       </div>
 
       <div
-        className="shadow-2xl z-50 relative w-screen py-5 hidden md:block"
+        className="shadow-2xl z-50 relative w-screen py-3 hidden md:block"
         style={{
           position: "fixed",
           bottom: "0",
           left: "0",
           right: "0",
-          height: "240px",
+          height: "180px",
           backgroundColor: "#263948",
         }}
       >
@@ -97,8 +96,8 @@ export default function Home() {
             <Image
               src="https://gjgciairviherlylizsx.supabase.co/storage/v1/object/public/images/support.webp"
               alt="이벤트 배너"
-              width={300}
-              height={180}
+              width={150}
+              height={120}
               className="w-full h-full object-cover rounded-lg"
             />
           </div>

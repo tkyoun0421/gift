@@ -4,16 +4,17 @@ import * as React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
-  LoginFormValues,
+  LoginInsertType,
   LoginSchema,
 } from "@/features/auth/models/loginSchema";
 import { signIn } from "@/features/auth/services/authService";
 
 export function useLoginForm() {
   const router = useRouter();
-  const form = useForm<LoginFormValues>({
+  const searchParams = useSearchParams();
+  const form = useForm<LoginInsertType>({
     resolver: zodResolver(LoginSchema),
     mode: "onChange",
     defaultValues: { email: "", password: "" },
@@ -23,7 +24,10 @@ export function useLoginForm() {
     try {
       const res = await signIn(values.email, values.password);
       toast.success(res.message ?? "로그인되었습니다.");
-      router.push("/");
+
+      const callbackUrl = searchParams.get("callback");
+      const redirectUrl = callbackUrl || "/";
+      router.push(redirectUrl);
     } catch (err: any) {
       const msg = err?.response?.data?.message || err?.message || "로그인 실패";
       toast.error(msg);

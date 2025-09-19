@@ -1,11 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
 import { createClient } from "@/shared/lib/supabase/server";
-
-const LoginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(1),
-});
+import { LoginSchema } from "@/features/auth/models/loginSchema";
 
 export async function POST(req: NextRequest) {
   try {
@@ -26,8 +21,17 @@ export async function POST(req: NextRequest) {
     });
 
     if (error) {
+      console.error("Login error:", error);
       return NextResponse.json(
-        { success: false, error: "LOGIN_FAILED", message: error.message },
+        {
+          success: false,
+          error: "LOGIN_FAILED",
+          message: error.message,
+          details: {
+            code: error.code,
+            status: error.status,
+          },
+        },
         { status: 401 }
       );
     }
@@ -37,8 +41,14 @@ export async function POST(req: NextRequest) {
       { status: 200 }
     );
   } catch (err) {
+    console.error("Login internal error:", err);
     return NextResponse.json(
-      { success: false, error: "INTERNAL_ERROR", message: "서버 오류" },
+      {
+        success: false,
+        error: "INTERNAL_ERROR",
+        message: "서버 오류",
+        details: process.env.NODE_ENV === "development" ? err : undefined,
+      },
       { status: 500 }
     );
   }

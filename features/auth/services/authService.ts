@@ -35,3 +35,16 @@ export async function signIn(
   const { data } = await api.post("/api/auth/login", { email, password });
   return { message: data?.message ?? "로그인되었습니다." };
 }
+
+export async function signOut(): Promise<{
+  success: boolean;
+  message: string;
+}> {
+  try {
+    const { data } = await api.post("/api/auth/logout");
+    return { success: true, message: data?.message ?? "로그아웃되었습니다." };
+  } catch (error) {
+    console.error("로그아웃 에러:", error);
+    return { success: false, message: "네트워크 오류가 발생했습니다." };
+  }
+}

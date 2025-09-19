@@ -1,12 +1,17 @@
 import { createClient } from "@/shared/lib/supabase/client";
-import { User } from "@/shared/types/database";
 
-export interface AuthUser extends User {
+export interface AuthUser {
+  id: string;
+  email: string;
+  name: string;
+  role: "user" | "admin" | "super_admin";
+  created_at?: string;
+  updated_at?: string;
   session?: any;
 }
 
 export class AuthService {
-  private supabase = createClient();
+  public supabase = createClient();
 
   /**
    * 현재 로그인된 사용자 정보 조회

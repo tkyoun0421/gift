@@ -145,28 +145,32 @@ export default function ApplicantTable({
           <span className="text-sm text-gray-600">
             {selectedIds.length}개 선택됨
           </span>
-          {selectedIds.length > 0 && (
-            <div className="flex gap-2">
-              <Button
-                onClick={() => handleComplete()}
-                disabled={actionLoading}
-                variant="outline"
-                size="sm"
-                className="h-8"
-              >
-                {actionLoading ? "처리중..." : "상담 완료"}
-              </Button>
-              <Button
-                onClick={() => handleDelete()}
-                disabled={actionLoading}
-                variant="outline"
-                size="sm"
-                className="h-8"
-              >
-                {actionLoading ? "삭제중..." : "삭제"}
-              </Button>
-            </div>
-          )}
+          <div className="flex gap-2">
+            <Button
+              onClick={() => handleComplete()}
+              disabled={
+                actionLoading ||
+                selectedIds.length === 0 ||
+                !applicants.some(
+                  app => selectedIds.includes(app.id) && !app.is_completed
+                )
+              }
+              variant="outline"
+              size="sm"
+              className="h-8"
+            >
+              상담 완료
+            </Button>
+            <Button
+              onClick={() => handleDelete()}
+              disabled={actionLoading || selectedIds.length === 0}
+              variant="outline"
+              size="sm"
+              className="h-8"
+            >
+              삭제
+            </Button>
+          </div>
         </div>
         <div className="text-sm text-gray-500">
           총 {pagination.totalCount}명 · 페이지 {pagination.currentPage}/

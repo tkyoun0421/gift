@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
+import { revalidateTag, revalidatePath } from "next/cache";
 import { createClient } from "@/shared/lib/supabase/server";
 import { ApplicantInsertSchema } from "@/features/applicant/models/applicantSchema";
 
@@ -211,7 +211,8 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    // 관리자 페이지 캐시 무효화
+    // 신청자 관련 캐시 무효화
+    revalidateTag("applicants");
     revalidatePath("/admin");
 
     return NextResponse.json(

@@ -110,9 +110,12 @@ export function useApplicantTable(initialApplicants: Applicant[]) {
 
       toast.success(`${targetIds.length}명의 상담이 완료 처리되었습니다.`);
       if (!ids) setSelectedIds([]);
-
+      
       // Server Component 데이터 갱신
       router.refresh();
+      
+      // 사이드바 갱신을 위한 커스텀 이벤트 발생
+      window.dispatchEvent(new CustomEvent('applicantDataChanged'));
     } catch (error) {
       console.error("상담 완료 처리 에러:", error);
       toast.error("상담 완료 처리에 실패했습니다.");
@@ -142,9 +145,12 @@ export function useApplicantTable(initialApplicants: Applicant[]) {
 
       toast.success(`${targetIds.length}명의 신청자가 삭제되었습니다.`);
       if (!ids) setSelectedIds([]);
-
+      
       // Server Component 데이터 갱신
       router.refresh();
+      
+      // 사이드바 갱신을 위한 커스텀 이벤트 발생
+      window.dispatchEvent(new CustomEvent('applicantDataChanged'));
     } catch (error) {
       console.error("신청자 삭제 에러:", error);
       toast.error("신청자 삭제에 실패했습니다.");

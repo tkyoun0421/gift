@@ -53,7 +53,7 @@ export default function ApplicantFilters({ stats }: ApplicantFiltersProps) {
             : "hover:bg-gray-50"
         }`}
       >
-        완료 ({stats.completed})
+        상담 완료 ({stats.completed})
       </Button>
     </div>
   );

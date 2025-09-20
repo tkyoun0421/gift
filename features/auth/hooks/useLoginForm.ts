@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -9,7 +8,7 @@ import {
   LoginInsertType,
   LoginSchema,
 } from "@/features/auth/models/loginSchema";
-import { signIn } from "@/features/auth/services/authService";
+import { signInAction } from "@/features/auth/actions/signInAction";
 
 export function useLoginForm() {
   const router = useRouter();
@@ -22,7 +21,10 @@ export function useLoginForm() {
 
   const onSubmit = form.handleSubmit(async values => {
     try {
-      const res = await signIn(values.email, values.password);
+      const res = await signInAction({
+        email: values.email,
+        password: values.password,
+      });
       toast.success(res.message ?? "로그인되었습니다.");
 
       const callbackUrl = searchParams.get("callback");

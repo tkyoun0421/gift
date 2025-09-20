@@ -40,7 +40,7 @@ export function useApplicantTable(initialApplicants: Applicant[]) {
           status: searchParams.get("status") || "all",
         });
 
-        const response = await api.get(`/api/applicant?${params}`);
+        const response = await api.get(`/api/applicant/list?${params}`);
         const data = response.data;
 
         if (data.success) {
@@ -110,12 +110,12 @@ export function useApplicantTable(initialApplicants: Applicant[]) {
 
       toast.success(`${targetIds.length}명의 상담이 완료 처리되었습니다.`);
       if (!ids) setSelectedIds([]);
-      
+
       // Server Component 데이터 갱신
       router.refresh();
-      
+
       // 사이드바 갱신을 위한 커스텀 이벤트 발생
-      window.dispatchEvent(new CustomEvent('applicantDataChanged'));
+      window.dispatchEvent(new CustomEvent("applicantDataChanged"));
     } catch (error) {
       console.error("상담 완료 처리 에러:", error);
       toast.error("상담 완료 처리에 실패했습니다.");
@@ -138,19 +138,19 @@ export function useApplicantTable(initialApplicants: Applicant[]) {
 
     try {
       setActionLoading(true);
-      await api.delete(`/api/applicant?ids=${targetIds.join(",")}`);
+      await api.delete(`/api/applicant/delete?ids=${targetIds.join(",")}`);
 
       // 클라이언트에서 상태 업데이트
       setApplicants(prev => prev.filter(app => !targetIds.includes(app.id)));
 
       toast.success(`${targetIds.length}명의 신청자가 삭제되었습니다.`);
       if (!ids) setSelectedIds([]);
-      
+
       // Server Component 데이터 갱신
       router.refresh();
-      
+
       // 사이드바 갱신을 위한 커스텀 이벤트 발생
-      window.dispatchEvent(new CustomEvent('applicantDataChanged'));
+      window.dispatchEvent(new CustomEvent("applicantDataChanged"));
     } catch (error) {
       console.error("신청자 삭제 에러:", error);
       toast.error("신청자 삭제에 실패했습니다.");

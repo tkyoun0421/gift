@@ -1,14 +1,14 @@
 "use client";
 
+import { useSignOut } from "@/features/auth/hooks/useSignOut";
 import { Button } from "@/shared/ui/button";
-import { useLogout } from "@/features/auth/hooks/useLogout";
 
-export default function LogoutButton() {
-  const { logout, isLoading } = useLogout();
+export default function SignOutButton() {
+  const { signOut, isLoading } = useSignOut();
 
   return (
     <Button
-      onClick={logout}
+      onClick={signOut}
       variant="outline"
       className="w-full py-2 rounded-xl text-sm"
       disabled={isLoading}

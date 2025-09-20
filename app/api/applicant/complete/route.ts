@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { revalidateTag, revalidatePath } from "next/cache";
-import { createClient } from "@/shared/lib/supabase/server";
+import { completeApplicantsServer } from "@/features/applicant/actions/completeApplicantsServer";
 
 export async function PATCH(request: NextRequest) {
   try {
@@ -31,29 +31,14 @@ export async function PATCH(request: NextRequest) {
       );
     }
 
-    const supabase = await createClient();
-
-    const { error } = await supabase
-      .from("applicants")
-      .update({
-        is_completed: true,
-        completed_at: new Date().toISOString(),
-      })
-      .in("id", idArray);
-
-    if (error) {
-      console.error("applicants complete error:", error);
+    const res = await completeApplicantsServer(idArray);
+    if (!res.ok) {
       return NextResponse.json(
-        {
-          success: false,
-          error: "DATABASE_ERROR",
-          message: "상담 완료 처리에 실패했습니다.",
-        },
-        { status: 500 }
+        { success: false, error: res.error, message: res.message },
+        { status: 400 }
       );
     }
 
-    // 신청자 관련 캐시 무효화
     revalidateTag("applicants");
     revalidatePath("/admin");
 

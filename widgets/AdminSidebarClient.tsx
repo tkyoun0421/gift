@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import LogoutButton from "@/features/auth/ui/LogoutButton";
+import SignOutButton from "@/features/auth/ui/SignOutButton";
 
 interface User {
   id: string;
@@ -17,7 +17,7 @@ interface Stats {
 }
 
 interface AdminSidebarClientProps {
-  user: User;
+  user?: User | null;
   stats: Stats;
 }
 
@@ -60,7 +60,7 @@ export default function AdminSidebarClient({
             />
           </svg>
         </button>
-        <h1 className="text-lg font-semibold text-gray-900">관리자 패널</h1>
+        <h1 className="text-lg font-semibold text-gray-900">어드민 페이지</h1>
         <div className="w-10" />
       </div>
 
@@ -71,7 +71,7 @@ export default function AdminSidebarClient({
       >
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-between p-6 border-b border-gray-200">
-            <h2 className="text-xl font-bold text-gray-900">관리자</h2>
+            <h2 className="text-xl font-bold text-gray-900">어드민 페이지</h2>
             <button
               onClick={() => setSidebarOpen(false)}
               className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
@@ -178,7 +178,7 @@ export default function AdminSidebarClient({
                       d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
                     />
                   </svg>
-                  사용자 관리
+                  어드민 관리
                 </div>
               </Link>
 
@@ -213,20 +213,7 @@ export default function AdminSidebarClient({
           </div>
 
           <div className="mt-auto p-4 border-t border-gray-200">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                <span className="text-blue-600 font-semibold text-sm">
-                  {user.name?.charAt(0) || "A"}
-                </span>
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-gray-900 truncate">
-                  {user.name || "관리자"}
-                </p>
-                <p className="text-xs text-gray-500 truncate">{user.role}</p>
-              </div>
-            </div>
-            <LogoutButton />
+            <SignOutButton />
           </div>
         </div>
       </div>

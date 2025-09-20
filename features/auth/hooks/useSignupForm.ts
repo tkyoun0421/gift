@@ -9,7 +9,7 @@ import {
   SignUpFormValues,
   SignUpSchema,
 } from "@/features/auth/models/signupSchema";
-import { signup as signupService } from "@/features/auth/services/authService";
+import { signUpAction } from "@/features/auth/actions/signUpAction";
 
 export function useSignupForm() {
   const router = useRouter();
@@ -29,13 +29,13 @@ export function useSignupForm() {
 
   const onSubmit = form.handleSubmit(async values => {
     try {
-      const res = await signupService({
+      const res = await signUpAction({
         email: values.email,
         password: values.password,
         name: values.name,
         inviteCode: values.inviteCode,
       });
-      toast.success(res.message);
+      toast.success(res.message || "가입 완료");
       router.push("/login");
     } catch (err: any) {
       const code = err?.response?.data?.error as string | undefined;

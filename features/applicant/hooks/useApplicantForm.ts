@@ -43,7 +43,7 @@ export function useApplicantForm(args?: {
           } as const;
 
           try {
-            const { data } = await api.post("/api/applicant", payload);
+            const { data } = await api.post("/api/applicant/create", payload);
             if (!data?.success) {
               toast.error(data?.message || "신청에 실패했습니다.");
               return;

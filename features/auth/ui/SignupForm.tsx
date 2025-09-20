@@ -13,7 +13,7 @@ import {
   CardTitle,
 } from "@/shared/ui/card";
 import EmailCheckDialog from "./EmailCheckDialog";
-import { checkEmailDuplicate } from "@/features/auth/services/authService";
+import { checkEmailDuplicateAction } from "@/features/auth/actions/checkEmailDuplicateAction";
 import { useSignupForm } from "@/features/auth/hooks/useSignupForm";
 import { LoadingSpinner } from "@/shared/ui/loading";
 
@@ -142,7 +142,7 @@ export default function SignupForm() {
             o ? openEmailDialog() : closeEmailDialog()
           }
           onConfirm={confirmEmailFromDialog}
-          onCheck={checkEmailDuplicate}
+          onCheck={checkEmailDuplicateAction}
         />
       )}
     </div>

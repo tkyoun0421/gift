@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { getApplicantData } from "@/features/applicant/hooks/useApplicantData";
+import { getApplicantData } from "@/features/applicant/actions";
 import ApplicantTable from "@/features/applicant/ui/ApplicantTable";
 import ApplicantStats from "@/features/applicant/ui/ApplicantStats";
 import ApplicantFilters from "@/features/applicant/ui/ApplicantFilters";
@@ -15,12 +15,12 @@ export default async function AdminDashboard({
 }: {
   searchParams: Promise<SearchParams>;
 }) {
-  const resolvedSearchParams = await searchParams;
-  const data = await getApplicantData(resolvedSearchParams);
+  const { page, status } = await searchParams;
+
+  const data = await getApplicantData({ page, status });
 
   return (
     <div className="p-4 lg:p-6 pt-20 lg:pt-6">
-      {/* 헤더 */}
       <div className="mb-6">
         <div className="flex items-center justify-between mb-4">
           <div>
@@ -31,22 +31,19 @@ export default async function AdminDashboard({
           </div>
         </div>
 
-        {/* 통계 요약 */}
         <ApplicantStats stats={data.stats} />
 
-        {/* 필터 */}
         <ApplicantFilters stats={data.stats} />
       </div>
 
-      {/* 테이블 */}
       <Suspense
-        key={`${resolvedSearchParams.page || "1"}-${resolvedSearchParams.status || "all"}`}
+        key={`${page || "1"}-${status || "all"}`}
         fallback={<TableSkeleton />}
       >
         <ApplicantTable
           applicants={data.applicants}
           pagination={data.pagination}
-          currentStatus={resolvedSearchParams.status || "all"}
+          currentStatus={status || "all"}
         />
       </Suspense>
     </div>

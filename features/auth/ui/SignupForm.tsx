@@ -93,6 +93,7 @@ export default function SignupForm() {
               <Input
                 id="confirm-password-input"
                 type="password"
+                placeholder="비밀번호 확인"
                 autoComplete="new-password"
                 {...form.register("confirmPassword")}
               />

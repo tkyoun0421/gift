@@ -38,9 +38,19 @@ export function useSignupForm() {
       toast.success(res.message || "가입 완료");
       router.push("/login");
     } catch (err: any) {
-      const code = err?.response?.data?.error as string | undefined;
-      const msg = err?.response?.data?.message ?? "회원가입 실패";
-      if (code === "INVALID_INVITE_CODE") {
+      const code =
+        (err?.response?.data?.error as string | undefined) ||
+        (err?.code as string | undefined);
+      const msg =
+        err?.response?.data?.message || err?.message || "회원가입 실패";
+      const isInvalidInvite =
+        code === "INVALID_INVITE_CODE" ||
+        (typeof msg === "string" && msg.includes("가입코드"));
+      const isEmailTaken =
+        code === "EMAIL_TAKEN" ||
+        (typeof msg === "string" && msg.includes("이미 사용 중인 이메일"));
+
+      if (isInvalidInvite) {
         form.setError("inviteCode", { type: "server", message: msg });
         queueMicrotask(() => {
           const el = document.getElementById("invite-code-input");
@@ -49,7 +59,7 @@ export function useSignupForm() {
         toast.error(msg);
         router.push("/login");
         return;
-      } else if (code === "EMAIL_TAKEN") {
+      } else if (isEmailTaken) {
         form.setError("email", { type: "server", message: msg });
         queueMicrotask(() => {
           const el = document.getElementById("email-input");

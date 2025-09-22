@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import type { MouseEvent } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import SignOutButton from "@/features/auth/ui/SignOutButton";
+import { toast } from "sonner";
 
 interface User {
   id: string;
@@ -30,6 +32,12 @@ export default function AdminSidebarClient({
 
   const isActive = (path: string) => {
     return pathname === path;
+  };
+
+  const handleInviteClick = (e: MouseEvent) => {
+    e.preventDefault();
+    toast.info("서비스 준비중입니다.");
+    setSidebarOpen(false);
   };
 
   return (
@@ -157,35 +165,7 @@ export default function AdminSidebarClient({
                 </div>
               </Link>
 
-              <Link href="/admin/users" onClick={() => setSidebarOpen(false)}>
-                <div
-                  className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${
-                    isActive("/admin/users")
-                      ? "bg-blue-100 text-blue-700"
-                      : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-                  }`}
-                >
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
-                    />
-                  </svg>
-                  어드민 관리
-                </div>
-              </Link>
-
-              <Link
-                href="/admin/invite-code"
-                onClick={() => setSidebarOpen(false)}
-              >
+              <Link href="/admin/invite-code" onClick={handleInviteClick}>
                 <div
                   className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${
                     isActive("/admin/invite-code")

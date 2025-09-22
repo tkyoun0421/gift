@@ -1,12 +1,22 @@
 "use server";
 
-import api from "@/shared/lib/axios";
+import { createClient } from "@/shared/lib/supabase/server";
+import { LoginSchema } from "@/features/auth/models/loginSchema";
 
 export async function signInAction(payload: {
   email: string;
   password: string;
 }): Promise<{ message: string }> {
-  const { data } = await api.post("/api/auth/login", payload);
-  return { message: data?.message ?? "로그인되었습니다." };
-}
+  const parsed = LoginSchema.safeParse(payload);
+  if (!parsed.success) {
+    throw new Error("입력값 오류");
+  }
 
+  const { email, password } = parsed.data;
+  const supabase = await createClient();
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error) {
+    throw new Error(error.message);
+  }
+  return { message: "로그인되었습니다." };
+}

@@ -132,12 +132,15 @@ export default function BannerApplicantForm({
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="bg-blue-600 text-white hover:bg-blue-700 font-semibold py-3 px-4 md:py-4 md:px-6 lg:py-6 lg:px-8 xl:py-8 xl:px-12 rounded-lg shadow-lg transition-all duration-200 hover:shadow-xl flex-shrink-0 text-sm md:text-sm lg:text-base xl:text-lg h-full"
+          className="bg-blue-600 text-white hover:bg-blue-700 font-semibold py-3 px-4 md:py-4 md:px-6 lg:py-6 lg:px-8 xl:py-8 xl:px-12 rounded-lg shadow-lg transition-all duration-200 hover:shadow-xl flex-shrink-0 text-sm md:text-sm lg:text-base xl:text-lg h-full relative"
         >
-          {isSubmitting ? (
-            <LoadingSpinner label="신청 중..." />
-          ) : (
-            "이벤트 신청하기"
+          <span className={isSubmitting ? "invisible" : "visible"}>
+            이벤트 신청하기
+          </span>
+          {isSubmitting && (
+            <span className="absolute inset-0 grid place-items-center">
+              <LoadingSpinner label="신청 중..." />
+            </span>
           )}
         </Button>
       </div>

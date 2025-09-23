@@ -140,14 +140,23 @@ export default function Home() {
             },
           },
         ]}
-        mobileItem={{
-          href: "https://open.kakao.com/o/saNIhwSh",
-          mobileHref: "tel:01083667745",
-          image: {
-            src: "https://gjgciairviherlylizsx.supabase.co/storage/v1/object/public/images/phone.webp",
-            alt: "전화 상담",
+        mobileItems={[
+          {
+            href: "tel:01083667745",
+            mobileHref: "tel:01083667745",
+            image: {
+              src: "https://gjgciairviherlylizsx.supabase.co/storage/v1/object/public/images/phone.webp",
+              alt: "전화 상담",
+            },
           },
-        }}
+          {
+            href: "https://open.kakao.com/o/saNIhwSh",
+            image: {
+              src: "https://gjgciairviherlylizsx.supabase.co/storage/v1/object/public/images/kakaotalk_sharing_btn_medium.webp",
+              alt: "카카오톡 상담",
+            },
+          },
+        ]}
       />
     </main>
   );

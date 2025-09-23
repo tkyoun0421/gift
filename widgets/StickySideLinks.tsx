@@ -12,9 +12,11 @@ type StickyItem = {
 export default function StickySideLinks({
   items,
   mobileItem,
+  mobileItems,
 }: {
   items: StickyItem[];
   mobileItem?: StickyItem;
+  mobileItems?: StickyItem[];
 }) {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -28,6 +30,12 @@ export default function StickySideLinks({
       window.matchMedia("(pointer: coarse)").matches;
     setIsMobile(Boolean(uaMobile || coarse));
   }, []);
+
+  const listForMobile = mobileItems?.length
+    ? mobileItems
+    : mobileItem
+      ? [mobileItem]
+      : [];
 
   return (
     <>
@@ -51,34 +59,33 @@ export default function StickySideLinks({
         ))}
       </div>
 
-      {mobileItem && (
-        <div className="md:hidden fixed bottom-3 right-3 z-50">
-          {(() => {
+      {listForMobile.length > 0 && (
+        <div className="md:hidden fixed bottom-3 right-3 z-50 flex flex-col gap-2">
+          {listForMobile.map((it, i) => {
             const effectiveHref =
-              isMobile && mobileItem.mobileHref
-                ? mobileItem.mobileHref
-                : mobileItem.href;
+              isMobile && it.mobileHref ? it.mobileHref : it.href;
             const isTel =
               typeof effectiveHref === "string" &&
               effectiveHref.startsWith("tel:");
             return (
               <Link
+                key={i}
                 href={effectiveHref}
                 // Do not open tel links in a new tab to ensure proper behavior on mobile
                 target={isTel ? undefined : "_blank"}
                 rel={isTel ? undefined : "noopener noreferrer"}
                 className="block shadow-lg transition-all duration-200 hover:shadow-xl"
-                aria-label={mobileItem.image.alt}
+                aria-label={it.image.alt}
               >
                 <img
-                  src={mobileItem.image.src}
-                  alt={mobileItem.image.alt}
+                  src={it.image.src}
+                  alt={it.image.alt}
                   className="block w-12 h-12 bg-white rounded-lg object-cover"
                   loading="lazy"
                 />
               </Link>
             );
-          })()}
+          })}
         </div>
       )}
     </>

@@ -66,8 +66,9 @@ export default function Home() {
       <Hero
         src="https://gjgciairviherlylizsx.supabase.co/storage/v1/object/public/images/service.webp"
         alt="거래소 소개"
-        width={1000}
-        height={400}
+        width={600}
+        height={288}
+        className="w-full max-w-[600px] h-auto"
       />
 
       <div className="w-full">

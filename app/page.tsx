@@ -63,6 +63,13 @@ export default function Home() {
         </div>
       </div>
 
+      <Hero
+        src="https://gjgciairviherlylizsx.supabase.co/storage/v1/object/public/images/service.webp"
+        alt="거래소 소개"
+        width={1000}
+        height={400}
+      />
+
       <div className="w-full">
         <div className="max-w-6xl mx-auto px-6 bg-white  py-16">
           <div className="text-center mb-12">

@@ -142,7 +142,7 @@ export default function Home() {
         ]}
         mobileItem={{
           href: "https://open.kakao.com/o/saNIhwSh",
-          mobileHref: "tel:01012345678",
+          mobileHref: "tel:01083667745",
           image: {
             src: "https://gjgciairviherlylizsx.supabase.co/storage/v1/object/public/images/phone.webp",
             alt: "전화 상담",

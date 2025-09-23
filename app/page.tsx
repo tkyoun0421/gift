@@ -49,8 +49,8 @@ export default function Home() {
               className="h-auto"
             />
           </div>
-          <div className="flex-1">
-            <div className="relative w-200 aspect-video">
+          <div className="flex-1 w-full">
+            <div className="relative w-full" style={{ paddingTop: "56.25%" }}>
               <iframe
                 className="absolute inset-0 w-full h-full shadow-lg"
                 src="https://www.youtube.com/embed/8aOkcyVhqbA?rel=0&modestbranding=1"
@@ -142,9 +142,10 @@ export default function Home() {
         ]}
         mobileItem={{
           href: "https://open.kakao.com/o/saNIhwSh",
+          mobileHref: "tel:01012345678",
           image: {
-            src: "https://gjgciairviherlylizsx.supabase.co/storage/v1/object/public/images/kakaotalk_sharing_btn_medium.webp",
-            alt: "카카오톡 상담",
+            src: "https://gjgciairviherlylizsx.supabase.co/storage/v1/object/public/images/phone.webp",
+            alt: "전화 상담",
           },
         }}
       />

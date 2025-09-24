@@ -8,13 +8,13 @@ export default function Home() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center pb-0 md:pb-48">
       <Hero
-        src="https://gjgciairviherlylizsx.supabase.co/storage/v1/object/public/images/1.webp"
+        src="https://gjgciairviherlylizsx.supabase.co/storage/v1/object/public/images/lesson1.webp"
         alt="메인 히어로"
         width={1000}
         height={600}
       />
       <Hero
-        src="https://gjgciairviherlylizsx.supabase.co/storage/v1/object/public/images/lee%20(1).webp"
+        src="https://gjgciairviherlylizsx.supabase.co/storage/v1/object/public/images/lesson2.webp"
         alt="파트너쉽"
         width={1000}
         height={600}
@@ -64,7 +64,7 @@ export default function Home() {
       </div>
 
       <Hero
-        src="https://gjgciairviherlylizsx.supabase.co/storage/v1/object/public/images/service.webp"
+        src="https://gjgciairviherlylizsx.supabase.co/storage/v1/object/public/images/lesson3.webp"
         alt="거래소 소개"
         width={600}
         height={288}

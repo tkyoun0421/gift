@@ -64,7 +64,7 @@ export default function Home() {
       </div>
 
       <Hero
-        src="https://gjgciairviherlylizsx.supabase.co/storage/v1/object/public/images/lesson3.webp"
+        src="https://gjgciairviherlylizsx.supabase.co/storage/v1/object/public/images/lesson4.webp"
         alt="거래소 소개"
         width={600}
         height={288}
